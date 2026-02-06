@@ -1,165 +1,116 @@
-# 8-Bit CPU Simulator
 
-A real-time CPU simulator that executes C programs with live visualization of all CPU operations.
+# 8-Bit CPU Simulator Based on 8051
 
-## What It Does
+Have you ever wondered what happens inside a microcontroller when you call a function or add two numbers in C? 
 
-This simulator compiles actual C programs using `gcc` and visualizes their execution on a simulated 8-bit CPU. You can write C code, compile it, and watch in real-time as:
-- Variables are allocated to memory
-- Registers update with values
-- Data flows through buses
-- ALU performs arithmetic operations
-- Stack operations are tracked
+This simulator is inspired by the classic 8051 architecture. It bridges the gap between high-level logic and hardware reality. By compiling actual C code via gcc and mapping the execution to a simulated 8-bit environment, it allows students and engineers to see the invisible dance of data between registers, memory, and the ALU.
+
+##  Overview
+This simulator bridges the gap between high-level programming and low-level hardware. By compiling C code using `gcc` and mapping it to a simulated 8-bit architecture, users can watch exactly how data moves through a computer in real-time.
+
+---
+
+## Features
+- **Live C Compilation:** Write C code and see it execute immediately.
+- **Visual Data Flow:** Watch data move across the **Address Bus** and **Data Bus**.
+- **Hardware Monitoring:** Real-time updates for:
+    - **Registers (R0-R7):** Including Hex and Decimal values.
+    - **ALU:** Visual feedback on arithmetic operations and status flags.
+    - **Memory Map:** Dedicated sections for Data (0x00-0x7F) and the Stack (0x80-0xFF).
+- **Execution Control:** Pause, reset, or step through cycles to inspect the CPU state.
+
+---
 
 ## Installation
 
-```bash
-# Install dependencies
-sudo apt-get install gcc python3-tk
+### Dependencies
+You will need a C compiler (`gcc`) and Python's GUI toolkit (`tkinter`).
 
-# Run the simulator
-cd path/CPU_Simulator
-python3 run.py
+**For Debian/Ubuntu:**
+```bash
+sudo apt-get update
+sudo apt-get install gcc python3-tk build-essential
+
 ```
 
-## How to Use
+### Running the Simulator
 
-1. Write or Edit C Code
-   - Edit C program in the left panel
-   - Or click "Load" to load a .c file
+1. Clone this repository:
+```bash
+git clone [https://github.com/yourusername/CPU_Simulator.git](https://github.com/yourusername/CPU_Simulator.git)
 
-2. Click "Compile & Execute"
-   - Compiles your C code with gcc
-   - Executes it on the simulated CPU
-   - Shows output in the status area
+```
 
-3. Watch the Visualization (Right Panel)
-   - Registers: R0-R7 showing values in hex and decimal
-   - Data Bus: Shows data transfers (value, source, destination)
-   - Address Bus: Shows memory access patterns
-   - Control Unit: Program counter, cycles executed
-   - ALU Status: Computation results and flags
-   - Memory: Data region (0x00-0x7F) and stack (0x80-0xFF)
 
-4. Control Execution
-   - Pause: Freeze execution to inspect state
-   - Reset: Clear all state and start over
+2. Navigate to the folder:
+```bash
+cd CPU_Simulator
+
+```
+
+
+3. Run the application:
+```bash
+python3 run.py
+
+```
+---
+
+##  Architecture Specifications
+
+| Component     | Specification |
+| **Word Size** | 8-Bit |
+| **Registers** | 8 General Purpose (R0-R6 = Data, R7 = Stack Pointer) |
+| **Memory**    | 256 Bytes Total (128B Data / 128B Stack) |
+| **Buses**     | Dedicated 8-bit Address and Data buses |
+| **Flags**     | Carry (C), Zero (Z), Overflow (O), Sign (S) |
+
+---
+
+##  Open Source & Contributing
+
+**This project is for the community!** 
+
+This is an **Open Source** project designed to help students and developers learn how computers work under the hood.
+
+* **Download & Use:** Anyone is free to download, use, and modify this project for learning or teaching.
+* **Contribute:** If you have ideas for improvements, new features, or bug fixes, please submit a Pull Request!
+* **Review:** I will review all contributions and merge updates that help improve the learning experience for everyone.
+
+---
 
 ## Example Program
 
-The simulator includes this sample array addition program:
+The simulator comes pre-loaded with an array addition script to demonstrate memory mapping:
 
-```c
+
 #include <stdio.h>
 
 int main() {
-    // Define two 8-bit-like arrays
     int arrayA[5] = {10, 20, 30, 40, 50};
     int arrayB[5] = {5, 15, 25, 35, 45};
     int result[5];
 
-    printf("Performing Array Addition...\n");
-
-    // Loop through the arrays and add elements
     for(int i = 0; i < 5; i++) {
         result[i] = arrayA[i] + arrayB[i];
-        printf("Index %d: %d + %d = %d\n", i, arrayA[i], arrayB[i], result[i]);
+        printf("Index %d: Result %d\n", i, result[i]);
     }
-
     return 0;
 }
-```
 
-### What Happens When You Run It
 
-1. Compilation: gcc compiles to executable
-2. Memory Allocation: Variables allocated to addresses
-   - arrayA: 0x00-0x04
-   - arrayB: 0x05-0x09
-   - result: 0x0A-0x0E
+### What to watch for during execution:
 
-3. Execution: For each loop iteration:
-   - Read arrayA[i] from memory (data bus shows transfer)
-   - Read arrayB[i] from memory
-   - ALU adds the two values
-   - Write result to result[i]
-   - All visualizations update in real-time
+1. **Memory Allocation:** See `arrayA`, `arrayB`, and `result` get assigned to specific memory addresses.
+2. **ALU Operations:** Watch the addition happen in the ALU before the value is stored back in memory.
+3. **Bus Traffic:** Notice the address bus changing as it iterates through the loop.
 
-4. Output: Shows in status area
-   ```
-   Performing Array Addition...
-   Index 0: 10 + 5 = 15
-   Index 1: 20 + 15 = 35
-   Index 2: 30 + 25 = 55
-   Index 3: 40 + 35 = 75
-   Index 4: 50 + 45 = 95
-   ```
-
-## Architecture
-
-### CPU Components
-- 8 Registers (R0-R7, R7 is Stack Pointer)
-- 256 Bytes Memory (0x00-0x7F: data, 0x80-0xFF: stack)
-- ALU with addition, subtraction, multiplication, division
-- Control Unit with program counter and instruction decoding
-- Data Bus (8-bit) for data transfers
-- Address Bus (8-bit) for memory addressing
-
-### Status Flags
-- C (Carry): Set when arithmetic produces carry
-- Z (Zero): Set when result is zero
-- O (Overflow): Set when signed overflow occurs
-- S (Sign): Set when result is negative
-
-## Try It Out
-
-```bash
-# Start the simulator
-python3 run.py
-
-# What you'll see:
-# 1. C code editor on the left
-# 2. CPU visualization on the right
-# 3. Sample array addition program already loaded
-
-# Click " Compile & Execute"
-# Watch the visualization show all CPU operations in real-time
-```
-
-## Write Your Own Program
-
-```c
-#include <stdio.h>
-
-int main() {
-    int x = 10;
-    int y = 20;
-    int z = x + y;
-    
-    printf("x + y = %d\n", z);
-    
-    return 0;
-}
-```
-
-1. Paste your code into the editor
-2. Click "Compile & Execute"
-3. Watch the CPU execute it with live visualization
+---
 
 ## Troubleshooting
 
-"gcc not found"
-```bash
-sudo apt-get install build-essential
-```
+* **"gcc not found":** Run `sudo apt-get install build-essential`.
+* **"tkinter not found":** Run `sudo apt-get install python3-tk`.
+* **Compile Error:** Check the status area in the simulator for standard C syntax errors.
 
-"tkinter not found"
-```bash
-sudo apt-get install python3-tk
-```
-
-Program won't compile
-- Check C syntax (semicolons, braces, etc.)
-- Try the built-in example first
-- Error message appears in status area
-
+---
