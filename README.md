@@ -1,12 +1,15 @@
 
-# 8-Bit CPU Simulator Based on 8051
+# 8-Bit CPU Simulator (8051-Inspired)
 
-Have you ever wondered what happens inside a microcontroller when you call a function or add two numbers in C? 
+Have you ever wondered what happens inside a microcontroller when you call a function or add two numbers in C?
 
-This simulator is inspired by the classic 8051 architecture. It bridges the gap between high-level logic and hardware reality. By compiling actual C code via gcc and mapping the execution to a simulated 8-bit environment, it allows students and engineers to see the invisible dance of data between registers, memory, and the ALU.
+This simulator bridges the gap between high-level logic and hardware reality. By leveraging the GCC compiler to process actual C code and mapping the resulting execution to a simulated 8-bit environment, it allows students and engineers to see data moving between registers, memory, and the ALU.
+
 
 ##  Overview
 This simulator bridges the gap between high-level programming and low-level hardware. By compiling C code using `gcc` and mapping it to a simulated 8-bit architecture, users can watch exactly how data moves through a computer in real-time.
+
+> **Note:** Because the simulator relies on `gcc` for the heavy lifting of code analysis, having a working C compiler installed on your system is mandatory.
 
 ---
 
